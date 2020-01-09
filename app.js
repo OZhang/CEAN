@@ -5,6 +5,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var apiRouter = require('./routes/book');
+var apiNodeCouchRouter = require('./routes/nodeCouchDb');
 var cors = require('cors');
 var app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'dist/cean-angular6')));
 app.use(cors());
 app.use('/', express.static(path.join(__dirname, 'dist/cean-angular6')));
 app.use('/api', apiRouter);
+app.use('/apinode', apiNodeCouchRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

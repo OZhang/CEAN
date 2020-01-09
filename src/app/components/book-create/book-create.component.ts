@@ -13,7 +13,7 @@ export class BookCreateComponent implements OnInit {
   bookForm: FormGroup;
 
   constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder) {
-   }
+  }
 
   ngOnInit() {
     this.bookForm = this.formBuilder.group({
@@ -26,21 +26,15 @@ export class BookCreateComponent implements OnInit {
     });
   }
 
-  onFormSubmit(form: NgForm){
+  onFormSubmit(form: NgForm) {
     console.log("onFormSubmit", form);
     // const book = this.createBook(form);
     this.api.postBook(form).subscribe((res: Book) => {
       console.log(res);
       let id = res['id'];
-      this.router.navigate(['/book-details', id]);      
+      this.router.navigate(['/book-details', id]);
     }, (err) => {
       console.log(err);
     });
   }
-  // createBook(form: NgForm) {
-  //   return new Book ({
-  //     isbn: form.is
-
-  //   })
-  // }
 }

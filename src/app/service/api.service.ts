@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Book } from '../models/Book';
@@ -7,7 +7,7 @@ import { Book } from '../models/Book';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-const apiUrl = "/api";
+const apiUrl = "/apinode";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class ApiService {
     return throwError('Somethind bad happened; please try again later.');
   }
 
-  private extractData(res: Response){
+  private extractData(res: Response) {
     let body = res;
     return body || {};
   }
@@ -61,8 +61,14 @@ export class ApiService {
     );
   }
 
-  deleteBook(id: string): Observable<{}> {
+  deleteBook(id: string, rev: string): Observable<{}> {
     const url = `${apiUrl}/${id}`;
+    let params = new HttpParams();
+    params = params.append('rev', rev);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params:params
+    };
     return this.http.delete(url, httpOptions).pipe(
       catchError(this.handleError)
     );

@@ -23,6 +23,8 @@ export class BookEditComponent implements OnInit {
       'author': [null, Validators.required],
       'publisher': [null, Validators.required],
       'published_year': [null, Validators.required],
+      "_id": [null],
+      "_rev": [null],
     });
 
   }
@@ -35,13 +37,15 @@ export class BookEditComponent implements OnInit {
         description: data.description,
         author: data.author,
         publisher: data.publisher,
-        published_year: data.published_year
+        published_year: data.published_year,
+        _id: data._id,
+        _rev: data._rev
       })
     })
   }
 
   onFormSubmit(form: NgForm) {
-    console.log(form)
+    console.log("onFormSubmit.form",form)
     this.api.updateBook(this.id, form).subscribe(res => {
       let id = res['id'];
       this.router.navigate(['/book-details', id]);
