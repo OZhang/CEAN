@@ -1,4 +1,5 @@
 const Book = {
+    _id: String,
     isbn: String,
     title: String,
     author: String,

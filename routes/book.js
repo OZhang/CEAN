@@ -6,13 +6,16 @@ const extend = require('util')._extend;
 router.get('/', function(req, res, next) {
     Books.list({ include_docs: true }).then(
         (body) => {
+            var result = [];
             body.rows.forEach((data) => {
                 console.log(data.doc);
+                result.push(data.doc);
             });
-            res.send(body.rows);
+
+            res.send(result);
         },
         err => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(err.statusCode);
         });
 });
@@ -24,7 +27,7 @@ router.get('/:id', function(req, res, next) {
             res.send(book);
         },
         err => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(err.statusCode);
         });
 })
@@ -34,7 +37,7 @@ router.post('/', function(req, res, next) {
             res.send(result);
         },
         err => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(err.statusCode);
         });
 })
@@ -48,7 +51,7 @@ router.put('/:id', function(req, res, next) {
             });
         },
         err => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(err.statusCode);
         });
 })
@@ -60,7 +63,7 @@ router.delete('/:id', function(req, res, next) {
             });
         },
         err => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(err.statusCode);
         });
 })
